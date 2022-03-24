@@ -1,37 +1,37 @@
 function getTotalBooksCount(books) {
-  return books.length
+  return books.length;
 }
 
 function getTotalAccountsCount(accounts) {
-  return accounts.length
+  return accounts.length;
 }
 
 function getBooksBorrowedCount(books) {
   let checkedOut = checkedOutBooks(books);
-  let count = 0
+  let count = 0;
   for (let i = 0; i < checkedOut.length; i++) {
     if (!checkedOut[i]) {
-      count++
+      count++;
     }
   }
-  return count
+  return count;
 }
 
 function checkedOutBooks(books) {
   const status = books.map((book) => {
-     if (book.borrows[0])
-    return book.borrows[0].returned
+     if (book.borrows[0]);
+    return book.borrows[0].returned;
   })
-  return status
+  return status;
 }
 
 function getMostCommonGenres(books) {
   let genres = books.reduce((result, book) => {
     if (result[book.genre]) {
-      result[book.genre].count++
+      result[book.genre].count++;
     } else {
-      result[book.genre] = { name: book.genre, count: 1 }}
-    return result
+      result[book.genre] = { name: book.genre, count: 1 }};
+    return result;
   }, {})
   return Object.keys(genres)
     .map(genre => genres[genre])
@@ -40,19 +40,19 @@ function getMostCommonGenres(books) {
 }
 
 function getMostPopularBooks(books) {
-  let items = []
-  let item = {}
+  let items = [];
+  let item = {};
   books.forEach(book => {
-    const bookTitle = book.title
-    const borrowAmount = book.borrows.length
-    item = {name: bookTitle, count: borrowAmount}
-    items.push(item)
+    const bookTitle = book.title;
+    const borrowAmount = book.borrows.length;
+    item = {name: bookTitle, count: borrowAmount};
+    items.push(item);
   });
-  items.sort((itemA, itemB) => (itemA.count < itemB.count ? 1 : -1))
+  items.sort((itemA, itemB) => (itemA.count < itemB.count ? 1 : -1));
   while (items.length > 5) {
-    items.pop()
+    items.pop();
   } 
-  return items
+  return items;
 }
 
 function getMostPopularAuthors(books, authors) {
@@ -60,16 +60,16 @@ function getMostPopularAuthors(books, authors) {
     const authorName = `${author.name.first} ${author.name.last}`;
     if (result[authorName]) {
       books.forEach(book => {
-        result[authorName].count += book.borrow.length
+        result[authorName].count += book.borrow.length;
       })
     } else {
         books.forEach(book => {
           if(book.authorId === author.id) {
-           result[authorName] = { name: authorName, count: book.borrows.length }}
+           result[authorName] = { name: authorName, count: book.borrows.length }};
          }
         )
       }
-    return result
+    return result;
   }, {})
   return Object.keys(bookAuthors)
     .map(author => bookAuthors[author])
